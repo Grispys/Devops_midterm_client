@@ -1,10 +1,13 @@
 package org.example.domain;
 
+import java.util.List;
+
 public class City {
     private long id;
     private String name;
     private String province;
     private int population;
+    private List<Airport> airports;
 
     public City() {
     }
@@ -41,5 +44,9 @@ public class City {
 
     public void setProvince(String province) {
         this.province = province;
+    }
+
+    public List<Airport> getAirports(){
+        return airports;
     }
 }

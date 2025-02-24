@@ -7,6 +7,7 @@ import org.example.http.client.RESTClient;
 import java.util.List;
 
 public class HTTPRestCLIApp {
+    private RESTClient restClient;
 
 //this is for the first question: "What airports are in what cities?" this will show all cities and what airports are in them.
     public String generateCityReport() {
@@ -15,12 +16,16 @@ public class HTTPRestCLIApp {
         StringBuffer report = new StringBuffer();
 
         for (City city : cities) {
+            report.append("In the city of ");
             report.append(city.getName());
-            report.append(" - ");
+            report.append(" In the province of ");
             report.append(city.getProvince());
+            report.append(", here are all the airports: ");
+            report.append(city.getAirports());
 
-            if (airports.indexOf(airport) != (airports.size() - 1)) {
+            if (cities.indexOf(city) != (cities.size() - 1)) {
                 report.append(",");
+
             }
         }
 
@@ -28,6 +33,19 @@ public class HTTPRestCLIApp {
 
         return report.toString();
     }
+
+    public RESTClient getRestClient() {
+        if (restClient == null) {
+            restClient = new RESTClient();
+        }
+
+        return restClient;
+    }
+
+    public void setRestClient(RESTClient restClient) {
+        this.restClient = restClient;
+    }
+
 
     public static void main(String[] args) {
         HTTPRestCLIApp cliApp = new HTTPRestCLIApp();

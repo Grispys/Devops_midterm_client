@@ -1,7 +1,10 @@
 package org.example.http.client;
 
 import org.example.domain.City;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -36,9 +39,7 @@ public class RESTClient {
         return responseBody;
     }
 
-    private HttpClient getClient() {
-        return client;
-    }
+
 
 //    list cities method
     public List<City> getAllCities(){
@@ -64,8 +65,27 @@ public class RESTClient {
 
     }
 
-    public List<City> buildCitiesListFromResponse(String response){
+    public List<City> buildCitiesListFromResponse(String response) throws JsonProcessingException {
+        List<City> cities = new ArrayList<City>();
 
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        cities = mapper.readValue(response, new TypeReference<List<City>>(){});
+        return cities;
     }
 
+    public String getServerURL() {
+        return serverURL;
+    }
+
+    public void setServerURL(String serverURL){
+        this.serverURL = serverURL;
+    }
+
+    private HttpClient getClient() {
+        if(client ==null){
+            client = HttpClient.newHttpClient();
+        }
+        return client;
+    }
 }
