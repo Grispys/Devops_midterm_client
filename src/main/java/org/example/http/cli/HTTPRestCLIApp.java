@@ -1,5 +1,6 @@
 package org.example.http.cli;
 
+import org.example.domain.Aircraft;
 import org.example.domain.Airport;
 import org.example.domain.City;
 import org.example.http.client.RESTClient;
@@ -34,6 +35,36 @@ public class HTTPRestCLIApp {
 
         return report.toString();
     }
+//question 2 - List all aircraft passengers have travelled on? i.e list all aircrafts that have passengers attached to them
+    public String generateAircraftPassengersReport() {
+        System.out.println("Question 2: ");
+        List<Aircraft> aircrafts = getRestClient().getAllAircrafts();
+
+        StringBuilder report = new StringBuilder();
+
+        for (Aircraft aircraft : aircrafts) {
+            report.append("The aircraft ");
+            report.append(aircraft.getType());
+            report.append(" which belongs to the ");
+            report.append(aircraft.getAirlineName());
+            report.append(", has these passengers: ");
+            report.append(aircraft.getPassengers());
+
+            if (aircrafts.indexOf(aircraft) != (aircrafts.size() - 1)) {
+                report.append(",\n"); //newline so its a little cleaner
+            }
+        }
+
+        System.out.println(report.toString());
+
+
+        return report.toString();
+    }
+
+
+
+
+
 
     public RESTClient getRestClient() {
         if (restClient == null) {
@@ -50,12 +81,18 @@ public class HTTPRestCLIApp {
 
     public static void main(String[] args) {
         HTTPRestCLIApp cliApp = new HTTPRestCLIApp();
-        String serverURL = "http://localhost:8080/api/cities";
+//        i cant remember how to change the serverURL dependant on the function call
+//        so i'm just gonna comment out and in the ones i need until i do
+//        String serverURL = "http://localhost:8080/api/cities";
+        String serverURL = "http://localhost:8080/api/aircrafts";
+//        String serverURL = "http://localhost:8080/api/airports";
+//        String serverURL = "http://localhost:8080/api/passengers";
         RESTClient restClient = new RESTClient();
         restClient.setServerURL(serverURL);
         cliApp.setRestClient(restClient);
 
         cliApp.generateCityReport();
+        cliApp.generateAircraftPassengersReport();
     }
 
 

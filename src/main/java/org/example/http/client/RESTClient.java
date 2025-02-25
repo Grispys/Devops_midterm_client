@@ -1,5 +1,6 @@
 package org.example.http.client;
 
+import org.example.domain.Aircraft;
 import org.example.domain.City;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -65,6 +66,32 @@ public class RESTClient {
 
     }
 
+    //    list aircrafts method
+    public List<Aircraft> getAllAircrafts(){
+        List<Aircraft> aircrafts = new ArrayList<Aircraft>();
+
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
+        try {
+            HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode()==200) {
+                System.out.println("***** " + response.body());
+            } else {
+                System.out.println("Error Status Code: " + response.statusCode());
+            }
+
+            aircrafts = buildAircraftsListFromResponse(response.body());
+
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return aircrafts;
+
+    }
+
+//    build X list from response methods
+
     public List<City> buildCitiesListFromResponse(String response) throws JsonProcessingException {
         List<City> cities = new ArrayList<City>();
 
@@ -72,6 +99,15 @@ public class RESTClient {
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         cities = mapper.readValue(response, new TypeReference<List<City>>(){});
         return cities;
+    }
+
+    public List<Aircraft> buildAircraftsListFromResponse(String response) throws JsonProcessingException {
+        List<Aircraft> aircrafts = new ArrayList<Aircraft>();
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        aircrafts = mapper.readValue(response, new TypeReference<List<Aircraft>>(){});
+        return aircrafts;
     }
 
     public String getServerURL() {
