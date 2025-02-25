@@ -11,10 +11,11 @@ public class HTTPRestCLIApp {
 
 //this is for the first question: "What airports are in what cities?" this will show all cities and what airports are in them.
     public String generateCityReport() {
+        System.out.println("Question 1: ");
         List<City> cities = getRestClient().getAllCities();
 
-        StringBuffer report = new StringBuffer();
-
+        StringBuilder report = new StringBuilder();
+//iterates through all cities and yoinks the info from them to display
         for (City city : cities) {
             report.append("In the city of ");
             report.append(city.getName());
@@ -24,12 +25,12 @@ public class HTTPRestCLIApp {
             report.append(city.getAirports());
 
             if (cities.indexOf(city) != (cities.size() - 1)) {
-                report.append(",");
-
+                report.append(",\n"); //newline so its a little cleaner
             }
         }
 
         System.out.println(report.toString());
+
 
         return report.toString();
     }
