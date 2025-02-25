@@ -51,6 +51,9 @@ public class Passenger {
         this.phoneNumber = phoneNumber;
     }
 
-
+    @Override
+    public String toString(){
+        return "Passenger Name: " + firstName + " " + lastName;
+    }
 
 }
