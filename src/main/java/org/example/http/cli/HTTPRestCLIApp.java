@@ -63,6 +63,34 @@ public class HTTPRestCLIApp {
 
 
 
+    //question 3 - list all aircrafts that have airports attached to them (where they can land and take off)
+    public String generateAircraftAirportReport() {
+        System.out.println("Question 3: ");
+        List<Aircraft> aircrafts = getRestClient().getAllAircrafts();
+
+        StringBuilder report = new StringBuilder();
+
+        for (Aircraft aircraft : aircrafts) {
+            report.append("The aircraft ");
+            report.append(aircraft.getType());
+            report.append(" which belongs to the ");
+            report.append(aircraft.getAirlineName());
+            report.append(", can land and take off from these airports: ");
+            report.append(aircraft.getPassengers());
+
+            if (aircrafts.indexOf(aircraft) != (aircrafts.size() - 1)) {
+                report.append(",\n"); //newline so its a little cleaner
+            }
+        }
+
+        System.out.println(report.toString());
+
+
+        return report.toString();
+    }
+
+
+
 
 
 
