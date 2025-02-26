@@ -53,7 +53,7 @@ public class Passenger {
 
     @Override
     public String toString(){
-        return "Passenger Name: " + firstName + " " + lastName;
+        return "\u001B[31m" + "Passenger Name: " + "\u001B[97m" + firstName + " " + lastName;
     }
 
 }
