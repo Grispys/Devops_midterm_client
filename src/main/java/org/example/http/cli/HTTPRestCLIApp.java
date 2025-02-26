@@ -12,7 +12,7 @@ public class HTTPRestCLIApp {
 
 //this is for the first question: "What airports are in what cities?" this will show all cities and what airports are in them.
     public String generateCityReport() {
-        System.out.println("Question 1: ");
+        System.out.println("\u001B[36m" + "Question 1: " + "\u001B[97m" );
         List<City> cities = getRestClient().getAllCities();
 
         StringBuilder report = new StringBuilder();
@@ -37,7 +37,7 @@ public class HTTPRestCLIApp {
     }
 //question 2 - List all aircraft passengers have travelled on? i.e list all aircrafts that have passengers attached to them
     public String generateAircraftPassengersReport() {
-        System.out.println("Question 2: ");
+        System.out.println("\u001B[36m" + "Question 2: " + "\u001B[97m" );
         List<Aircraft> aircrafts = getRestClient().getAllAircrafts();
 
         StringBuilder report = new StringBuilder();
@@ -65,7 +65,7 @@ public class HTTPRestCLIApp {
 
     //question 3 - list all aircrafts that have airports attached to them (where they can land and take off)
     public String generateAircraftAirportReport() {
-        System.out.println("Question 3: ");
+        System.out.println("\u001B[36m" + "Question 3: " + "\u001B[97m");
         List<Aircraft> aircrafts = getRestClient().getAllAircrafts();
 
         StringBuilder report = new StringBuilder();
@@ -76,7 +76,7 @@ public class HTTPRestCLIApp {
             report.append(" which belongs to the ");
             report.append(aircraft.getAirlineName());
             report.append(", can land and take off from these airports: ");
-            report.append(aircraft.getPassengers());
+            report.append(aircraft.getAirports());
 
             if (aircrafts.indexOf(aircraft) != (aircrafts.size() - 1)) {
                 report.append(",\n"); //newline so its a little cleaner
@@ -111,9 +111,11 @@ public class HTTPRestCLIApp {
         HTTPRestCLIApp cliApp = new HTTPRestCLIApp();
 //        i cant remember how to change the serverURL dependant on the function call
 //        so i'm just gonna comment out and in the ones i need until i do
+//        QUESTION 1 URL:
 //        String serverURL = "http://localhost:8080/api/cities";
+//        QUESTION 2 AND 3 URL:
         String serverURL = "http://localhost:8080/api/aircrafts";
-//        String serverURL = "http://localhost:8080/api/airports";
+
 //        String serverURL = "http://localhost:8080/api/passengers";
         RESTClient restClient = new RESTClient();
         restClient.setServerURL(serverURL);
@@ -121,6 +123,7 @@ public class HTTPRestCLIApp {
 
         cliApp.generateCityReport();
         cliApp.generateAircraftPassengersReport();
+        cliApp.generateAircraftAirportReport();
     }
 
 
