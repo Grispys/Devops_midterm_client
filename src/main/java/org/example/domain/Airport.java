@@ -47,6 +47,6 @@ public class Airport {
 
     @Override
     public String toString(){
-        return "Airport: " + name + ", Code: " + code;
+        return "\u001B[31m" + "Airport: " + "\u001B[97m" +  name + "," + "\u001B[31m"+ "Code: " +  "\u001B[97m" + code;
     }
 }
