@@ -91,6 +91,33 @@ public class HTTPRestCLIApp {
 
 
 
+    //question 4 - what airports have passengers used? i think i can figure this out by just listing the airports that are attached to aircrafts that are attached to passengers
+    public String generatePassengerAirportReport() {
+        System.out.println("\u001B[36m" + "Question 4: " + "\u001B[97m");
+        List<Aircraft> aircrafts = getRestClient().getAllAircrafts();
+
+        StringBuilder report = new StringBuilder();
+
+        for (Aircraft aircraft : aircrafts) {
+            report.append("These passengers: ");
+            report.append(aircraft.getPassengers());
+            report.append(" have all used these airports: ");
+            report.append(aircraft.getAirports());
+
+            if (aircrafts.indexOf(aircraft) != (aircrafts.size() - 1)) {
+                report.append(",\n"); //newline so its a little cleaner
+            }
+        }
+
+        System.out.println(report.toString());
+
+
+        return report.toString();
+    }
+
+
+
+
 
 
 
@@ -111,12 +138,16 @@ public class HTTPRestCLIApp {
         HTTPRestCLIApp cliApp = new HTTPRestCLIApp();
 //        i cant remember how to change the serverURL dependant on the function call
 //        so i'm just gonna comment out and in the ones i need until i do
+
+
+
 //        QUESTION 1 URL:
 //        String serverURL = "http://localhost:8080/api/cities";
-//        QUESTION 2 AND 3 URL:
+//        QUESTION 2 -4 URL:
         String serverURL = "http://localhost:8080/api/aircrafts";
 
-//        String serverURL = "http://localhost:8080/api/passengers";
+
+
         RESTClient restClient = new RESTClient();
         restClient.setServerURL(serverURL);
         cliApp.setRestClient(restClient);
@@ -124,6 +155,7 @@ public class HTTPRestCLIApp {
         cliApp.generateCityReport();
         cliApp.generateAircraftPassengersReport();
         cliApp.generateAircraftAirportReport();
+        cliApp.generatePassengerAirportReport();
     }
 
 
