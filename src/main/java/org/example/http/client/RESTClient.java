@@ -44,6 +44,7 @@ public class RESTClient {
 
 //    list cities method
     public List<City> getAllCities(){
+        setServerURL("http://localhost:8080/api/cities");
         List<City> cities = new ArrayList<City>();
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
@@ -68,6 +69,7 @@ public class RESTClient {
 
     //    list aircrafts method
     public List<Aircraft> getAllAircrafts(){
+        setServerURL("http://localhost:8080/api/aircrafts");
         List<Aircraft> aircrafts = new ArrayList<Aircraft>();
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();

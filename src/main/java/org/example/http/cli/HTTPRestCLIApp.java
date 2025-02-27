@@ -136,20 +136,11 @@ public class HTTPRestCLIApp {
 
     public static void main(String[] args) {
         HTTPRestCLIApp cliApp = new HTTPRestCLIApp();
-//        i cant remember how to change the serverURL dependant on the function call
-//        so i'm just gonna comment out and in the ones i need until i do
 
-
-
-//        QUESTION 1 URL:
-//        String serverURL = "http://localhost:8080/api/cities";
-//        QUESTION 2 -4 URL:
-        String serverURL = "http://localhost:8080/api/aircrafts";
 
 
 
         RESTClient restClient = new RESTClient();
-        restClient.setServerURL(serverURL);
         cliApp.setRestClient(restClient);
 
         cliApp.generateCityReport();
