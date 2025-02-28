@@ -1,7 +1,6 @@
 package org.example.http.cli;
 
 import org.example.domain.Aircraft;
-import org.example.domain.Airport;
 import org.example.domain.City;
 import org.example.http.client.RESTClient;
 
