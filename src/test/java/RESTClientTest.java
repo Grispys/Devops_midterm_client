@@ -1,6 +1,7 @@
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.example.domain.Airport;
 import org.example.domain.City;
 import org.example.http.client.RESTClient;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RESTClientTest {
 
@@ -49,6 +51,9 @@ public class RESTClientTest {
         assertEquals("Toronto", cities.getFirst().getName());
         assertEquals("Ontario", cities.getFirst().getProvince());
         System.out.println(cities.getFirst().getAirports());
-        assertTrue(cities.getFirst().getAirports().contains("YYZ"));
+//        IT WORKS NOW YUAAAAAAAAAAAAAAAAAAAAAAAAAAY
+        assertTrue(cities.getFirst().getAirports().stream().map(Airport::getCode).toList().contains("YYZ"));
     }
+
+
 }
