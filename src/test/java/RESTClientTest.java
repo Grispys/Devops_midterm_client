@@ -1,6 +1,7 @@
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.example.domain.Aircraft;
 import org.example.domain.Airport;
 import org.example.domain.City;
 import org.example.http.client.RESTClient;
@@ -45,7 +46,7 @@ public class RESTClientTest {
         // get all the cities from the returned response and then check if it's all good
         List<City> cities = restClient.getAllCities();
 
-        // Verify the results
+        // verify the results
         assertNotNull(cities);
         assertEquals(1, cities.size());
         assertEquals("Toronto", cities.getFirst().getName());
@@ -53,6 +54,37 @@ public class RESTClientTest {
         System.out.println(cities.getFirst().getAirports());
 //        IT WORKS NOW YUAAAAAAAAAAAAAAAAAAAAAAAAAAY
         assertTrue(cities.getFirst().getAirports().stream().map(Airport::getCode).toList().contains("YYZ"));
+    }
+
+    @Test
+    void testGetAllAircraftAirports() throws Exception {
+        // mock the httpresponse stuff. this will add a new aircraft with the airport ids.
+        String jsonResponse = "[{" +
+                "\"type\":\"Airplane 3000\"," +
+                "\"airlineName\":\"Test Airlines\"," +
+                "\"numOfPassengers\": 3," +
+                "\"airports\":[{\"id\": 2},{\"id\": 3}]" +
+                "}]";
+        when(mockHttpResponse.body()).thenReturn(jsonResponse);
+        when(mockHttpResponse.statusCode()).thenReturn(200);
+
+        // Mock httpclient to return the response thing
+        when(mockHttpClient.send(any(HttpRequest.class), eq(HttpResponse.BodyHandlers.ofString())))
+                .thenReturn(mockHttpResponse);
+
+        // get all the aircrafts from the fake mock thing
+        List<Aircraft> aircrafts = restClient.getAllAircrafts();
+
+        // verify the results
+        assertNotNull(aircrafts);
+        assertEquals(1, aircrafts.size());
+        assertEquals("Airplane 3000", aircrafts.getFirst().getType());
+        assertEquals("Test Airlines", aircrafts.getFirst().getAirlineName());
+        System.out.println(aircrafts.getFirst().getAirports());
+//
+//        this test will check if the aircrafts list of airports contains the correct airport id's
+        assertTrue(aircrafts.getFirst().getAirports().stream().map(Airport::getId).toList().contains(2L));
+        assertTrue(aircrafts.getFirst().getAirports().stream().map(Airport::getId).toList().contains(3L));
     }
 
 
