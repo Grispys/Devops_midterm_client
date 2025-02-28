@@ -19,6 +19,17 @@ public class RESTClient {
     private String serverURL;
     private HttpClient client;
 
+//this constructor is used for mockitos testing where it expewcts the contructor to have the httpclient as argument
+    public RESTClient(HttpClient httpClient){
+       this.client = httpClient;
+       this.serverURL =  "http://localhost:8080/api/";
+    }
+
+    // overloaded construcor so httprestcliapp doesnt throw a tantrum
+    public RESTClient() {
+        this(HttpClient.newHttpClient());
+    }
+
 
 //    gets response from http via httprequest. structure taken from jamies example
     public String getResponse(){
